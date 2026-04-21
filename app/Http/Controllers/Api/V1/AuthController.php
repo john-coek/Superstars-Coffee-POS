@@ -38,11 +38,21 @@ class AuthController extends Controller
         );
     }
 
-    public function me(Request $request) 
+    public function me(Request $request)
     {
         return ApiResponse::success(
             new UserResource($request->user()),
             'User Data'
+        );
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return ApiResponse::success(
+            null,
+            'Logout Successfully'
         );
     }
 }
